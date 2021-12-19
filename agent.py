@@ -1,14 +1,19 @@
 import argparse
-import gym
-import envs
-from tqdm import tqdm
-import numpy as np
+import os
 import random
-from visualizations import Visualizations
+import shutil
+
+import gym
+import numpy as np
 import scipy
 from sklearn.cluster import KMeans
-import os
-import shutil
+from tqdm import tqdm
+
+import envs
+from envs.envbase import BaseEnv
+from envs.maze import MazeEnv
+from envs.papermaze import PaperMazeEnv
+from visualizations import Visualizations
 
 
 class SuccessorOptionsAgent:
@@ -16,7 +21,12 @@ class SuccessorOptionsAgent:
     def __init__(self, env_name, alpha, gamma, rollout_samples, options_count, option_learning_steps, clustering, action_option_sampling):
         self.alpha = alpha
         self.gamma = gamma
-        self.env = gym.make(env_name)
+        if env_name=='PaperMaze-v0':
+            self.env= PaperMazeEnv()
+        elif env_name=='Maze-v0':
+            self.env = MazeEnv()
+        else:
+            self.env:BaseEnv = gym.make(env_name)
         self.rollout_samples = rollout_samples
         self.option_learning_steps = option_learning_steps
         self.options_count = options_count

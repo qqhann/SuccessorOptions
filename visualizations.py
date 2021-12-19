@@ -1,13 +1,16 @@
 import copy
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
+
+from envs.envbase import BaseEnv
 
 
 class Visualizations:
 
     def __init__(self, env, data_dir):
-        self.env = env
+        self.env:BaseEnv = env
         self.data_dir = data_dir
 
         self.show_plots = False
